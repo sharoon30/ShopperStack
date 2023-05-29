@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import genericLibrary.BaseClass;
 
 //THE PRODUCT SHOULD BE THERE IN THE CART(PRE CONDITION)[1product]
+//One product
 
 public class TC_E2E_03 extends BaseClass {
 	@Test
