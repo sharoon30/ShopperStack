@@ -9,8 +9,10 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
+import org.testng.asserts.SoftAssert;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
@@ -23,7 +25,8 @@ import io.appium.java_client.service.local.flags.AndroidServerFlag;
 public class BaseClass {
 	public AndroidDriver<AndroidElement> driver;
 	public WebDriverWait explicitWait;
-	
+	public SoftAssert softAssert;
+
 	@BeforeClass
 	public void capabilitiesSettings() {
 		AppiumServiceBuilder builder = new AppiumServiceBuilder();
@@ -32,11 +35,11 @@ public class BaseClass {
 		builder.withArgument(AndroidServerFlag.BOOTSTRAP_PORT_NUMBER, "4728");
 		builder.withIPAddress("127.0.0.1");
 		builder.usingPort(Integer.parseInt("4725"));
-		
+
 		AppiumDriverLocalService service = AppiumDriverLocalService.buildService(builder);
 		service.start();
 		URL appiumServerURL = service.getUrl();
-		
+
 		DesiredCapabilities capability = new DesiredCapabilities();
 		capability.setCapability("platformName", "Android");
 		capability.setCapability("platformVersion", "12.0");
@@ -46,41 +49,52 @@ public class BaseClass {
 		capability.setCapability("appActivity", "com.google.android.apps.chrome.Main");
 		capability.setCapability("autoAcceptAlerts", true);
 		capability.setCapability(AndroidMobileCapabilityType.AUTO_GRANT_PERMISSIONS, false);
-		
+
 		driver = new AndroidDriver<AndroidElement>(appiumServerURL,capability);
+		softAssert = new SoftAssert();
 		explicitWait = new WebDriverWait(driver, 40);
-		
+
 		driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
-	//	driver.get("https://www.ShoppersStack.com");
-		
+		//	driver.get("https://www.ShoppersStack.com");
+
 		AndroidElement useWithoutAnAccount = driver.findElementByXPath("//android.widget.Button[@text=\r\n"
 				+ "'Use without an account']");
 		useWithoutAnAccount.click();
 	}
-	
+
 	@BeforeMethod
 	public void loginToApplication() {
 		AndroidElement gSearchTextField  = driver.findElementById("com.android.chrome:id/search_box_text");
 		gSearchTextField.sendKeys("ShopperStack");
-		
+
 		AndroidElement shopperStackSuggestion = driver.findElementByXPath("//android.widget.TextView[@text='ShopperStack']");
 		shopperStackSuggestion.click();
-		
+
 		Assert.assertEquals(driver.findElementByXPath("//android.view.View[@text='ShoppersStack']").isDisplayed(), true , "Welcome page is not displayed");
 		Reporter.log("Welcome Page is displayed" , true);
-		
+
 		AndroidElement shopper = driver.findElementByXPath("//android.view.View[@text='ShoppersStack']");
 		shopper.click();
-		
+
 		AndroidElement loginButton = driver.findElementByXPath("//android.widget.Button[@text='Login']");
 		loginButton.click();	
-		
+
 		Assert.assertEquals(driver.findElementByXPath("//android.widget.EditText[@resource-id='Email']").isDisplayed(), true , "Login page is not displayed");
 		Reporter.log("Login Page is Displayed" , true);
 		driver.findElementByXPath("//android.widget.EditText[@resource-id='Email']").sendKeys("neerajapasala21@gmail.com");
 		driver.findElementByXPath("//android.widget.EditText[@resource-id='Password']").sendKeys("nrSBTYV8g@S@Eau");
 		driver.findElementByXPath("//android.widget.Button[@resource-id='Login']").click();
-		
+
 	}
-	
+
+	@AfterMethod
+	public void logoutScript() throws Exception {
+		Thread.sleep(10000);
+		driver.findElementByXPath("//android.widget.Button[@text='Account settings']").click();
+		//Validates Account setting menu 
+		Assert.assertEquals(driver.findElementByXPath("//android.view.MenuItem[@text='Logout']").isDisplayed(), true,"Account settings menu is not displayed");
+		Reporter.log("Account Setting Menu is displayed",true);
+		//clicks on Logout 
+		driver.findElementByXPath("//android.view.MenuItem[@text='Logout']").click();
+	}
 }

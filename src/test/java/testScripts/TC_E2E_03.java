@@ -1,6 +1,6 @@
 package testScripts;
 
-import org.testng.Assert;
+
 import org.testng.Reporter;
 import org.testng.annotations.Test;
 
@@ -13,14 +13,14 @@ public class TC_E2E_03 extends BaseClass {
 	@Test
 	public void testScripts() {
 		//Validates the home screen 
-		Assert.assertEquals(driver.findElementByXPath("//android.view.View[@resource-id='cart']").isDisplayed(), true , "The Home screen is not displayed");
+		softAssert.assertEquals(driver.findElementByXPath("//android.view.View[@resource-id='cart']").isDisplayed(), true , "The Home screen is not displayed");
 		Reporter.log("Homescreen is displayed",true);
 		
 		//will click on cart icon
 		driver.findElementByXPath("//android.view.View[@resource-id='cart']").click();
 		
 		//Validates the cart Screen 
-		Assert.assertEquals(driver.findElementByXPath("//android.widget.Button[@text='Continue Shopping']").isDisplayed(), true , "CartScreen is not displayed");
+		softAssert.assertEquals(driver.findElementByXPath("//android.widget.Button[@text='Continue Shopping']").isDisplayed(), true , "CartScreen is not displayed");
 		Reporter.log("Cart Screen is displayed" , true);
 		
 		//will click on continue shopping button
@@ -31,7 +31,7 @@ public class TC_E2E_03 extends BaseClass {
 		//will click on yes confirmation button
 		driver.findElementByXPath("//android.widget.Button[@text='YES']").click();
 		
-		Assert.assertEquals(driver.findElementByXPath("//android.widget.TextView[@text='Your cart is empty!']").isDisplayed(), true , "Not Removed");
+		softAssert.assertEquals(driver.findElementByXPath("//android.widget.TextView[@text='Your cart is empty!']").isDisplayed(), true , "Not Removed");
 		Reporter.log("The Product is removed successfully and Your cart is empty message is displayed",true);		
 	}
 }
