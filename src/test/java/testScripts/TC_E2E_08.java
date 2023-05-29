@@ -80,9 +80,5 @@ public class TC_E2E_08 extends BaseClass{
 		driver.findElementByXPath("//android.widget.Button[@text='Account settings']").click();
 		//tap on my order
 		driver.findElementByXPath("//android.view.MenuItem[@text='My Orders']").click();
-		//Tap on account settings
-		driver.findElementByXPath("//android.widget.Button[@text='Account settings']").click();
-		//Tap on logout 
-		driver.findElementByXPath("//android.view.MenuItem[@text='Logout']").click();
 	}
 }

@@ -158,18 +158,5 @@ public class TC_E2E_07 extends BaseClass{
 		//Validates Order confirmation Message 
 		Assert.assertEquals(driver.findElementByXPath("//android.widget.Button[@text='Account settings']").isDisplayed(), true , "Order confirmed is not displayed");
 		Reporter.log("Order Confirmation is confirmed",true);
-		
-		//will click on Account settings
-		Thread.sleep(7000);
-		driver.findElementByXPath("//android.widget.Button[@text='Account settings']").click();
-		
-		//Validates Account setting menu 
-		Assert.assertEquals(driver.findElementByXPath("//android.view.MenuItem[@text='Logout']").isDisplayed(), true,"Account settings menu is not displayed");
-		Reporter.log("Account Setting Menu is displayed",true);
-		
-		//clicks on Logout 
-		driver.findElementByXPath("//android.view.MenuItem[@text='Logout']").click();
-		
-		Reporter.log("Logged out",true);
 	}
 }

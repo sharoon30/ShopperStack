@@ -90,11 +90,13 @@ public class BaseClass {
 	@AfterMethod
 	public void logoutScript() throws Exception {
 		Thread.sleep(10000);
+		//clicks on account settings
 		driver.findElementByXPath("//android.widget.Button[@text='Account settings']").click();
 		//Validates Account setting menu 
 		Assert.assertEquals(driver.findElementByXPath("//android.view.MenuItem[@text='Logout']").isDisplayed(), true,"Account settings menu is not displayed");
 		Reporter.log("Account Setting Menu is displayed",true);
 		//clicks on Logout 
 		driver.findElementByXPath("//android.view.MenuItem[@text='Logout']").click();
+		Reporter.log("Logged out",true);
 	}
 }
