@@ -57,7 +57,7 @@ public class TC_E2E_06 extends BaseClass{
 		Reporter.log("Last Name is entered",true);
 		
 		//Will locate date of birth text field 
-		driver.findElementByXPath("//android.widget.EditText[@resource-id=':r5:']").click();
+		driver.findElementByXPath("//android.widget.EditText[contains(@resource-id,':')]").click();
 
 		//will click on edit date of birth icon 
 		driver.findElementByXPath("(//android.widget.Button[contains(@text,'calendar view')])[1]").click();
